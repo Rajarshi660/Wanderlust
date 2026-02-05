@@ -1,0 +1,122 @@
+/* --- Global Reset & Sticky Footer --- */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+}
+
+.container {
+    flex: 1; /* Ensures footer stays at the bottom */
+}
+
+/* --- Brand Identity --- */
+.navbar {
+    height: 5rem;
+    background-color: white !important;
+    padding: 0.5rem 3rem !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08) !important;
+}
+
+.navbar-brand {
+    color: #ff4452 !important; /* Brand Pink-Red */
+    font-size: 2.2rem !important;
+    font-weight: 600;
+}
+
+/* --- Listing Card UI (Index Page) --- */
+.card.listing-card {
+    border: none !important;
+    background-color: transparent !important;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.card-img-top {
+    border-radius: 1.5rem !important; /* Premium rounded look */
+    height: 20rem;
+    object-fit: cover;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+/* Blur & Overlay Hover Effect */
+.card-img-overlay {
+    opacity: 0;
+    background-color: white;
+    transition: opacity 0.3s ease;
+    border-radius: 1.5rem !important;
+    pointer-events: none;
+}
+
+.listing-card:hover .card-img-top {
+    filter: blur(2px);
+    opacity: 0.85;
+}
+
+.listing-card:hover .card-img-overlay {
+    opacity: 0.15;
+}
+
+/* --- Action Buttons (Show Page) --- */
+.btns {
+    display: flex;
+    gap: 1rem; /* Spacing between side-by-side buttons */
+    margin-top: 1rem;
+}
+
+.edit-btn {
+    background-color: #ff4452 !important;
+    border: none !important;
+    color: white !important;
+    padding: 0.6rem 2.5rem !important;
+    border-radius: 10px !important;
+    font-weight: 500;
+}
+
+.delete-btn {
+    background-color: #222222 !important; /* Charcoal black */
+    border: none !important;
+    color: white !important;
+    padding: 0.6rem 2.5rem !important;
+    border-radius: 10px !important;
+}
+
+/* --- Validation & Error States --- */
+.invalid-feedback {
+    font-size: 0.8rem;
+    color: #dc3545;
+}
+
+.alert-danger {
+    border-radius: 1.5rem !important;
+    background-color: #fff5f5 !important;
+    color: #ff4452 !important;
+    border: none !important;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* --- Footer --- */
+.f-info {
+    text-align: center;
+    background-color: #ebebeb;
+    height: 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+}
+
+.f-info-socials i {
+    font-size: 1.5rem;
+    margin: 0 1rem;
+    color: #222222;
+    transition: 0.2s;
+}
+
+.f-info-socials i:hover {
+    color: #ff4452;
+}
