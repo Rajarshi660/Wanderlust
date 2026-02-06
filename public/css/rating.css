@@ -1,0 +1,23 @@
+/* Starability Static Result Display */
+.starability-result {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 20px;
+  background-image: url("https://raw.githubusercontent.com/LunarLogic/starability/master/assets/stars.png");
+  background-repeat: no-repeat;
+  background-size: 100px auto;
+  margin-bottom: 10px;
+}
+
+.starability-result::after {
+  content: "";
+  display: block;
+}
+
+/* Positioning for different ratings */
+.starability-result[data-rating="1"] { background-position: 0 -20px; }
+.starability-result[data-rating="2"] { background-position: 0 -40px; }
+.starability-result[data-rating="3"] { background-position: 0 -60px; }
+.starability-result[data-rating="4"] { background-position: 0 -80px; }
+.starability-result[data-rating="5"] { background-position: 0 -100px; }

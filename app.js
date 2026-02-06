@@ -5,7 +5,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 
-// Import Utilities
+// Import Custom Utilities
 const ExpressError = require("./utils/ExpressError");
 const wrapAsync = require("./utils/wrapAsync");
 
@@ -13,19 +13,15 @@ const wrapAsync = require("./utils/wrapAsync");
 const Listing = require("./models/listing");
 const Review = require("./models/review");
 
-// Import Joi Schemas
+// Import Validation Schemas (Ensure module.exports in schema.js)
 const { listingSchema, reviewSchema } = require("./schema.js");
 
 // --- DATABASE CONNECTION ---
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 main()
-    .then(() => {
-        console.log("Connected to DB");
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+    .then(() => console.log("Connected to DB"))
+    .catch((err) => console.log(err));
 
 async function main() {
     await mongoose.connect(MONGO_URL);
@@ -35,6 +31,7 @@ async function main() {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
@@ -74,7 +71,7 @@ app.get("/listings/new", (req, res) => {
     res.render("listings/new.ejs");
 });
 
-// Show Route (Populate reviews)
+// Show Route (Crucial: Includes Populate)
 app.get("/listings/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id).populate("reviews");
@@ -134,7 +131,7 @@ app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => 
 app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
     let { id, reviewId } = req.params;
 
-    // Use $pull to remove the review ID from the Listing's reviews array
+    // Remove the reference from Listing and delete the Review document
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
 
@@ -143,12 +140,12 @@ app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
 
 // --- ERROR HANDLING ---
 
-// Final Catch-all for undefined routes
+// Final Catch-all for undefined routes (Express 5 compatible syntax)
 app.use((req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
 });
 
-// Global Error Handler
+// Global Error Middleware
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong!" } = err;
     res.status(statusCode).render("error.ejs", { err });

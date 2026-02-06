@@ -120,3 +120,46 @@ body {
 .f-info-socials i:hover {
     color: #ff4452;
 }
+/* --- Review Section --- */
+.review-card {
+    border: 1px solid #ebebeb !important;
+    border-radius: 0.8rem !important;
+    padding: 1rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.review-card .card-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.review-card .card-text {
+    color: #484848;
+    font-size: 0.95rem;
+}
+
+/* User Icon Styling */
+.user-icon {
+    color: #ff4452; /* Brand Pink-Red */
+    margin-right: 0.5rem;
+}
+
+/* Review Delete Button */
+.btn-review-delete {
+    background-color: transparent;
+    border: 1px solid #222;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 5px;
+    transition: all 0.2s;
+}
+
+.btn-review-delete:hover {
+    background-color: #222;
+    color: #fff;
+}
