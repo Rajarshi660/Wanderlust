@@ -1,37 +1,30 @@
-<nav class="navbar navbar-expand-md bg-white border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/listings">
-      <i class="fa-regular fa-compass"></i>
-    </a>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex search-bar" role="search">
-          <input class="form-control search-input" type="search" placeholder="Search destinations" aria-label="Search">
-          <button class="btn btn-search" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </form>
-      </div>
-
-      <ul class="navbar-nav ms-auto align-items-center">
-        <li class="nav-item">
-          <a class="nav-link nav-text" href="/listings">All Listings</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link nav-text" href="/listings/new">Create new listing</a>
-        </li>
-        <li class="nav-item ms-2">
-            <div class="user-menu d-flex align-items-center">
-                <i class="fa-solid fa-bars me-2"></i>
-                <i class="fa-solid fa-circle-user"></i>
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/listings">Explore</a>
             </div>
-        </li>
-      </ul>
+
+            <div class="navbar-nav ms-auto">
+                <% if (req.originalUrl !== "/") { %>
+                    
+                    <a class="nav-link" href="/listings/new">New Listing</a>
+
+                    <% if(!currUser) { %>
+                        <a class="nav-link" href="/signup"><b>Signup</b></a>
+                        <a class="nav-link" href="/login"><b>Login</b></a>
+                    <% } %>
+
+                    <% if(currUser) { %>
+                        <a class="nav-link" href="/logout"><b>Logout</b></a>
+                    <% } %>
+
+                <% } %>
+            </div>
+        </div>
     </div>
-  </div>
 </nav>
