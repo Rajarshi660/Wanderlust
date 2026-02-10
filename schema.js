@@ -7,9 +7,9 @@ module.exports.listingSchema = Joi.object({
         location: Joi.string().required(),
         country: Joi.string().required(),
         price: Joi.number().required().min(0),
-        image: Joi.object({
-            url: Joi.string().allow("", null)
-        }).allow("", null)
+        // Allow image to be empty/null because the actual file 
+        // is handled by Multer, not by this Joi body validator
+        image: Joi.string().allow("", null) 
     }).required()
 });
 

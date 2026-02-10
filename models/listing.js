@@ -20,7 +20,6 @@ const listingSchema = new Schema({
       ref: "Review",
     },
   ],
-  // Link to the User who created this listing
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",

@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -8,36 +12,32 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+
 const User = require("./models/user.js");
+const ExpressError = require("./utils/ExpressError.js");
 
 const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-// --- DATABASE CONNECTION ---
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 main()
-  .then(() => {
-    console.log("connected to DB");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+  .then(() => console.log("connected to DB"))
+  .catch((err) => console.log(err));
 
 async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
-// --- VIEW ENGINE & MIDDLEWARE ---
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.engine("ejs", ejsMate);
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-// --- SESSION CONFIG ---
 const sessionOptions = {
   secret: "mysupersecretcode",
   resave: false,
@@ -52,44 +52,40 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
-// --- PASSPORT CONFIG ---
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
-
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// --- LOCALS FOR EJS ---
+// GLOBAL MIDDLEWARE - MUST BE BEFORE ROUTES
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-  res.locals.currUser = req.user; 
-  res.locals.req = req; // <--- CRITICAL: Required for your Navbar conditional logic
+  res.locals.currUser = req.user;
   next();
 });
 
-// --- ROOT / LANDING PAGE ROUTE ---
+// ROUTES
+// Root Route: Redirecting to listings to ensure the site loads
 app.get("/", (req, res) => {
-  res.render("listings/landing.ejs");
+  res.redirect("/listings");
 });
 
-// --- ROUTES ---
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
 
-// --- 404 HANDLER ---
+
 app.use((req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
 });
-
-// --- ERROR HANDLER ---
+// ERROR HANDLER
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong!" } = err;
   res.status(statusCode).render("error.ejs", { err }); 
 });
 
 app.listen(8080, () => {
-  console.log("server is listening to port 8080");
+  console.log("server is listening on port 8080");
 });

@@ -90,3 +90,55 @@ body {
 .f-info-links a:hover {
     text-decoration: underline;
 }
+/* Auth Card Styling */
+.auth-card {
+    border: none;
+    border-radius: 20px;
+    background-color: #fff;
+    border: 1px solid #eeeeee;
+}
+
+.auth-header h2 {
+    color: #222;
+    letter-spacing: -1px;
+}
+
+/* Input Styling */
+.custom-input {
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1.5px solid #ddd;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    border-color: #fe424d;
+    box-shadow: 0 0 0 0.25rem rgba(254, 66, 77, 0.1);
+}
+
+/* Button Styling */
+.auth-btn {
+    background-color: #fe424d !important;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+}
+
+.auth-btn:hover {
+    background-color: #e33640 !important;
+    transform: translateY(-2px);
+}
+/* Align Starability stars correctly */
+.starability-result {
+    margin-bottom: 1rem;
+}
+
+/* Optional: change the star color to match Wanderlust theme */
+.starability-slot input:checked ~ label,
+.starability-slot label:hover,
+.starability-slot label:hover ~ label {
+    color: #fe424d; /* Wanderlust Red */
+}

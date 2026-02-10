@@ -5,14 +5,26 @@
 
 <div class="landing-wrapper">
     <div class="landing-content text-center">
-        <h1 class="main-title">
-            <span>W</span><span>a</span><span>n</span><span>d</span><span>e</span><span>r</span><span>l</span><span>u</span><span>s</span><span>t</span>
-        </h1>
+        <h1 class="main-title">Wanderlust</h1>
         
-        <p class="tagline">Explore the world, stay like a local.</p>
+        <p id="animated-tagline" class="tagline">Explore the world, stay like a local.</p>
         
         <a href="/listings" class="btn get-started-btn mt-4">
             Get Started <i class="fa-solid fa-arrow-right-long ms-2"></i>
         </a>
     </div>
 </div>
+
+<script>
+    const tagline = document.getElementById('animated-tagline');
+    const text = tagline.textContent;
+    tagline.textContent = ''; // Clear original text
+
+    // Break text into individual spans
+    for (let i = 0; i < text.length; i++) {
+        const span = document.createElement('span');
+        span.textContent = text[i] === ' ' ? '\u00A0' : text[i]; // Handle spaces
+        span.style.animationDelay = `${i * 0.05 + 1.5}s`; // 0.05s delay per letter, starting after 1.5s
+        tagline.appendChild(span);
+    }
+</script>

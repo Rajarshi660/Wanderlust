@@ -1,67 +1,68 @@
 const Listing = require("../models/listing");
 
-// INDEX - Fetch all listings and display them
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
     res.render("listings/index.ejs", { allListings });
 };
 
-// NEW - Render the form to create a new listing
 module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs");
 };
 
-// SHOW - Display details for one specific listing
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id).populate("reviews");
-    
-    // If listing doesn't exist, flash error and redirect
+    const listing = await Listing.findById(id)
+        .populate({
+            path: "reviews",
+            populate: { path: "author" },
+        })
+        .populate("owner");
     if (!listing) {
-        req.flash("error", "The listing you are looking for does not exist!");
+        req.flash("error", "Listing you requested for does not exist!");
         return res.redirect("/listings");
     }
-    
     res.render("listings/show.ejs", { listing });
 };
 
-// CREATE - Logic to save a new listing to the Database
-module.exports.createListing = async (req, res) => {
+module.exports.createListing = async (req, res, next) => {
+    let url = req.file.path;
+    let filename = req.file.filename;
     const newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id;
+    newListing.image = { url, filename };
     await newListing.save();
-    
-    req.flash("success", "Successfully created a new listing!");
+    req.flash("success", "New Listing Created!");
     res.redirect("/listings");
 };
 
-// EDIT - Render the form to edit an existing listing
 module.exports.renderEditForm = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
-    
     if (!listing) {
-        req.flash("error", "The listing you want to edit does not exist!");
+        req.flash("error", "Listing you requested for does not exist!");
         return res.redirect("/listings");
     }
-    
-    res.render("listings/edit.ejs", { listing });
+    let originalImageUrl = listing.image.url;
+    originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250");
+    res.render("listings/edit.ejs", { listing, originalImageUrl });
 };
 
-// UPDATE - Save the edited changes to the Database
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-    
-    req.flash("success", "Listing updated successfully!");
+    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    if (typeof req.file !== "undefined") {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        listing.image = { url, filename };
+        await listing.save();
+    }
+    req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);
 };
 
-// DESTROY - Delete a listing from the Database
 module.exports.destroyListing = async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
-    console.log("Deleted:", deletedListing);
-    
-    req.flash("success", "Listing deleted!");
+    req.flash("success", "Listing Deleted!");
     res.redirect("/listings");
 };

@@ -1,17 +1,19 @@
 const Listing = require("./models/listing");
 const Review = require("./models/review");
+const ExpressError = require("./utils/ExpressError.js");
+const { listingSchema, reviewSchema } = require("./schema.js");
 
-// Check if user is logged in
+// 1. Check if user is authenticated
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
-        req.session.redirectUrl = req.originalUrl;
-        req.flash("error", "You must be logged in!");
+        req.session.redirectUrl = req.originalUrl; // Store the page they were trying to visit
+        req.flash("error", "You must be logged in to create listing!");
         return res.redirect("/login");
     }
     next();
 };
 
-// Save redirect URL after login
+// 2. Redirect back to original page after login
 module.exports.saveRedirectUrl = (req, res, next) => {
     if (req.session.redirectUrl) {
         res.locals.redirectUrl = req.session.redirectUrl;
@@ -19,7 +21,7 @@ module.exports.saveRedirectUrl = (req, res, next) => {
     next();
 };
 
-// Authorization for Listings
+// 3. Authorization: Check if current user is the owner of the listing
 module.exports.isOwner = async (req, res, next) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
@@ -30,7 +32,7 @@ module.exports.isOwner = async (req, res, next) => {
     next();
 };
 
-// Authorization for Reviews
+// 4. Authorization: Check if current user is the author of the review
 module.exports.isReviewAuthor = async (req, res, next) => {
     let { id, reviewId } = req.params;
     let review = await Review.findById(reviewId);
@@ -39,4 +41,26 @@ module.exports.isReviewAuthor = async (req, res, next) => {
         return res.redirect(`/listings/${id}`);
     }
     next();
+};
+
+// 5. Validation: Listing Schema (Joi)
+module.exports.validateListing = (req, res, next) => {
+    let { error } = listingSchema.validate(req.body);
+    if (error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    } else {
+        next();
+    }
+};
+
+// 6. Validation: Review Schema (Joi)
+module.exports.validateReview = (req, res, next) => {
+    let { error } = reviewSchema.validate(req.body);
+    if (error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    } else {
+        next();
+    }
 };

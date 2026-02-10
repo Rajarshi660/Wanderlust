@@ -1,4 +1,5 @@
 <% layout("/layout/boilerplate") %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/starability/2.4.2/starability-all.min.css">
 <div class="row mt-3">
   <div class="col-8 offset-3">
     <h3><%= listing.title %></h3>
@@ -53,7 +54,9 @@
           <div class="card-body">
             <h5 class="card-title">@<%= review.author ? review.author.username : "anonymous" %></h5>
             <p class="card-text"><%= review.comment %></p>
-            <p class="card-text"><%= review.rating %> Stars</p>
+            <p class="starability-result" data-rating="<%= review.rating %>">
+  Rated: <%= review.rating %> stars
+</p>
             
             <% if(currUser && review.author && review.author._id.equals(currUser._id)) { %>
               <form class="mb-3" method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
