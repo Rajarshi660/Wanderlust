@@ -142,3 +142,193 @@ body {
 .starability-slot label:hover ~ label {
     color: #fe424d; /* Wanderlust Red */
 }
+.nav-auth {
+  padding: 0.5rem 1.2rem !important;
+  border-radius: 25px !important;
+  background-color: transparent;
+  border: 1px solid #fe424d !important;
+  color: #fe424d !important;
+  margin-left: 0.5rem;
+}
+
+.nav-auth:hover {
+  background-color: #fe424d !important;
+  color: white !important;
+  box-shadow: 0 4px 8px rgba(254, 66, 77, 0.2);
+}
+/* Auth Buttons Hover Effect */
+.nav-auth {
+  color: #484848 !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.nav-auth:hover {
+  color: #fe424d !important;
+  transform: translateY(-2px);
+}
+
+/* Voice Button Styling */
+.voice-search-btn {
+  cursor: pointer;
+  color: #484848;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+}
+
+.voice-search-btn:hover {
+  color: #fe424d;
+  transform: scale(1.1);
+}
+
+/* Pulsing effect when the mic is active */
+.voice-active {
+  color: #fe424d !important;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+/* Container for the search bar */
+.search-form {
+    border: 1px solid #ced4da;
+    border-radius: 50px; /* Makes it a pill shape */
+    padding: 3px 3px 3px 15px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    align-items: center;
+}
+
+/* Hover effect for the whole bar */
+.search-form:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Input field styling */
+.search-inp {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-size: 0.9rem;
+    padding: 0;
+}
+
+/* Search Button styling */
+.search-btn {
+    background-color: #fe424d !important; /* Brand Coral */
+    color: white !important;
+    border-radius: 50% !important; /* Circle button */
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    transition: background-color 0.2s ease;
+}
+
+.search-btn:hover {
+    background-color: #d93943 !important;
+}
+
+.search-btn i {
+    font-size: 0.85rem;
+}
+
+/* When the user clicks into the search bar */
+.search-form:focus-within {
+    border-color: #fe424d;
+    box-shadow: 0 0 0 0.25rem rgba(254, 66, 77, 0.25);
+}
+@media (min-width: 768px) {
+    .search-form {
+        min-width: 300px;
+    }
+}
+.f-info {
+  text-align: center;
+  display: flex;
+  height: 6rem; /* Reduced height */
+  background-color: #ebebeb;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0; /* Reduced padding */
+  border-top: 1px solid #ced4da;
+}
+
+.f-info-socials {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem; /* Space between icons */
+  margin-bottom: 0.5rem; /* Reduced margin */
+}
+
+.f-info-socials i {
+  font-size: 1.2rem; /* Slightly smaller icons for a thinner footer */
+  color: #484848;
+  transition: color 0.2s ease;
+}
+
+.f-info-socials i:hover {
+  color: #fe424d;
+}
+
+.f-info-links a, 
+.f-info-brand {
+  font-size: 0.85rem; /* Smaller text fits a smaller footer better */
+  color: #484848;
+  text-decoration: none;
+}
+
+.f-info-links a:hover {
+  text-decoration: underline;
+}
+
+.f-info-links {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+/* Auth Button Styling */
+.signup-btn {
+    background-color: #fe424d !important;
+    color: white !important;
+    border-radius: 25px !important;
+    padding: 0.5rem 1.2rem !important;
+    margin-left: 10px;
+    transition: 0.3s;
+}
+
+.signup-btn:hover {
+    background-color: #d8343e !important;
+}
+
+.login-link {
+    font-weight: 600;
+    color: #222 !important;
+}
+
+/* New Listing Button */
+.btn-new {
+    background-color: #222 !important;
+    color: white !important;
+    border-radius: 8px;
+    padding: 0.6rem 1.5rem;
+    border: none;
+}
+
+/* Form Styling */
+.auth-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-top: 3rem;
+}
