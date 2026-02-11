@@ -1,27 +1,56 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+<nav class="navbar navbar-expand-md bg-white border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
+    <a class="navbar-brand" href="/">
+      <i class="fa-regular fa-compass brand-icon"></i>
+      <span class="navbar-brand-text">Wanderlust</span>
+    </a>
     
     <% if (currPath !== '/') { %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="/listings">Explore</a>
+        </div>
+
+        <div class="navbar-nav ms-auto">
+          <form class="d-flex" role="search" action="/listings" method="GET">
+            <div class="search-container">
+              <input 
+                class="form-control search-inp" 
+                type="search" 
+                placeholder="Search destinations" 
+                name="search"
+              >
+              <button type="button" class="btn-mic" id="mic-btn">
+                <i class="fa-solid fa-microphone"></i>
+              </button>
+              <button class="btn btn-search" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="navbar-nav ms-auto align-items-center">
+          <% if(!currUser) { %>
+            <a class="nav-link btn-login px-3" href="/login">Login</a>
+            <a class="nav-link btn-signup ms-2" href="/signup">Signup</a>
+          <% } %>
+
+          <% if(currUser) { %>
+            <a class="nav-link btn-new-listing me-3" href="/listings/new">Airbnb your home</a>
+            <a class="nav-link btn-logout" href="/logout">Logout</a>
+          <% } %>
+        </div>
       </div>
-      
-      <div class="navbar-nav ms-auto">
-        <% if(!currUser) { %>
-          <a class="nav-link btn-auth login-link" href="/login">Login</a>
-          <a class="nav-link btn-auth signup-btn" href="/signup">Signup</a>
-        <% } %>
-        <% if(currUser) { %>
-          <a class="nav-link" href="/listings/new">New</a>
-          <a class="nav-link" href="/logout">Logout</a>
-        <% } %>
-      </div>
-    </div>
     <% } %>
   </div>
 </nav>

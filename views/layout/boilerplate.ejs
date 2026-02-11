@@ -4,20 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wanderlust</title>
-    <link rel="stylesheet" href="/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="d-flex flex-column vh-100">
     <%- include("../includes/navbar.ejs") %>
-    
+
     <div class="container flex-fill">
         <%- include("../includes/flash.ejs") %>
         <%- body %>
     </div>
 
     <%- include("../includes/footer.ejs") %>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const micBtn = document.getElementById('mic-btn');
+        const searchInp = document.querySelector('.search-inp');
+
+        if (micBtn && 'webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+            micBtn.addEventListener('click', () => {
+                recognition.start();
+                micBtn.style.color = "#fe424d";
+            });
+            recognition.onresult = (event) => {
+                searchInp.value = event.results[0][0].transcript;
+                micBtn.style.color = "#717171";
+            };
+        }
+    </script>
 </body>
 </html>

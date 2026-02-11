@@ -1,24 +1,64 @@
 <% layout("/layout/boilerplate") %>
 
 <style>
+  /* Filter or Category Bar (Optional) */
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .filter {
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+
+  .filter:hover {
+    opacity: 1;
+  }
+
+  .filter i {
+    font-size: 1.5rem;
+  }
+
+  .filter p {
+    font-size: 0.8rem;
+  }
+
+  /* Card Hover Effects */
   .listing-card {
     border: none !important;
     margin-bottom: 2rem;
+    transition: 0.3s;
   }
+
   .card-img-top {
     border-radius: 1rem !important;
-    width: 100%;
-    object-fit: cover;
+    width: 100% !important;
+    object-fit: cover !important;
+    transition: 0.3s;
   }
-  .listing-link {
-    text-decoration: none;
-    color: #222222;
+
+  .listing-card:hover .card-img-top {
+    filter: brightness(90%);
   }
+
   .card-body {
-    padding: 0;
+    padding: 0.5rem 0 !important;
   }
+
   .card-text b {
     font-weight: 600;
+  }
+
+  .listing-link {
+    text-decoration: none;
+    color: #222;
   }
 </style>
 
@@ -32,7 +72,8 @@
         alt="listing_image"
         style="height: 20rem"
       />
-      <div class="card-body mt-2">
+      <div class="card-img-overlay"></div>
+      <div class="card-body">
         <p class="card-text">
           <b><%= listing.title %></b> <br />
           &#8377; <%= listing.price.toLocaleString("en-IN") %> / night

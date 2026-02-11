@@ -1,8 +1,22 @@
 const Listing = require("../models/listing");
 
-// INDEX: Fetch all listings and render the gallery
+// INDEX: Show all listings (with Search functionality)
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
+    let { search } = req.query;
+    let allListings;
+
+    if (search) {
+        // Search by Title, Location, or Country (Case-Insensitive)
+        allListings = await Listing.find({
+            $or: [
+                { title: { $regex: search, $options: "i" } },
+                { location: { $regex: search, $options: "i" } },
+                { country: { $regex: search, $options: "i" } },
+            ]
+        });
+    } else {
+        allListings = await Listing.find({});
+    }
     res.render("listings/index.ejs", { allListings });
 };
 
@@ -33,7 +47,7 @@ module.exports.showListing = async (req, res) => {
 // CREATE: Save a new listing and link it to the current user
 module.exports.createListing = async (req, res) => {
     const newListing = new Listing(req.body.listing);
-    // VITAL: Assigning the logged-in user's ID as the owner
+    // Assigning the logged-in user's ID as the owner
     newListing.owner = req.user._id; 
     await newListing.save();
     req.flash("success", "New Listing Created!");
@@ -54,6 +68,7 @@ module.exports.renderEditForm = async (req, res) => {
 // UPDATE: Update the listing details in the database
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
+    // Uses spread operator to update all fields from the form
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);

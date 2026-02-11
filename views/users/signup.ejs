@@ -1,23 +1,27 @@
 <% layout("/layout/boilerplate") %>
-<div class="row">
-    <div class="col-md-6 offset-md-3 col-sm-10 offset-sm-1">
-        <div class="auth-container">
-            <h2 class="mb-4">Create your account</h2>
+
+<div class="row mt-5">
+    <div class="col-md-6 offset-md-3">
+        <div class="auth-card mx-auto">
+            <h2>Join Wanderlust</h2>
             <form action="/signup" method="POST" class="needs-validation" novalidate>
-                <div class="mb-3">
-                    <label class="form-label">Username</label>
-                    <input name="username" type="text" class="form-control" required />
+                <div class="mb-4">
+                    <label for="username" class="form-label">Username</label>
+                    <input name="username" id="username" type="text" class="form-control auth-input" placeholder="Enter username" required />
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input name="email" type="email" class="form-control" required />
+                <div class="mb-4">
+                    <label for="email" class="form-label">Email</label>
+                    <input name="email" id="email" type="email" class="form-control auth-input" placeholder="Enter email" required />
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input name="password" type="password" class="form-control" required />
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input name="password" id="password" type="password" class="form-control auth-input" placeholder="Create password" required />
                 </div>
-                <button class="btn signup-btn w-100 py-2">Create Account</button>
+                <button class="btn auth-btn w-100">Sign Up</button>
             </form>
+            <div class="auth-footer">
+                Already have an account? <a href="/login">Login</a>
+            </div>
         </div>
     </div>
 </div>
